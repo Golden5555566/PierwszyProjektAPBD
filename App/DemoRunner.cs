@@ -7,18 +7,9 @@ public class DemoRunner
 {
     public void Run()
     {
-        var equipment = new List<Equipment>
-        {
-            new Laptop("Dell Latitude", "Intel i5"),
-            new Projector("Epson X1", 3200),
-            new Camera("Sony Handycam", true)
-        };
-
-        var users = new List<User>
-        {
-            new Student("Anna Kowalska", "s12345"),
-            new Employee("Jan Nowak", "IT")
-        };
+        var sampleData = SampleDataSeeder.Create();
+        var equipment = sampleData.Equipment;
+        var users = sampleData.Users;
 
         var rentalService = new RentalService();
         var reportService = new ReportService();
@@ -29,15 +20,15 @@ public class DemoRunner
         Console.WriteLine(reportService.BuildUsersReport(users));
 
         Console.WriteLine("=== WYPOZYCZENIA ===");
-        PrintResult(rentalService.RentEquipment(equipment[0], users[0], today));
-        PrintResult(rentalService.RentEquipment(equipment[1], users[1], today));
-        PrintResult(rentalService.RentEquipment(equipment[0], users[1], today));
+        PrintResult(rentalService.RentEquipment(sampleData.Laptop, sampleData.Student, today));
+        PrintResult(rentalService.RentEquipment(sampleData.Projector, sampleData.Employee, today));
+        PrintResult(rentalService.RentEquipment(sampleData.Laptop, sampleData.Employee, today));
 
         Console.WriteLine();
         Console.WriteLine(reportService.BuildActiveRentalsReport(rentalService.Rentals));
 
         Console.WriteLine("=== ZWROT ===");
-        PrintResult(rentalService.ReturnEquipment(equipment[0], today.AddDays(3)));
+        PrintResult(rentalService.ReturnEquipment(sampleData.Laptop, today.AddDays(3)));
 
         Console.WriteLine();
         Console.WriteLine(reportService.BuildEquipmentReport(equipment));
