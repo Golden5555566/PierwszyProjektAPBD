@@ -55,4 +55,18 @@ public class RentalService
     {
         return _rentals.Where(r => r.IsActive).ToList();
     }
+
+    public List<Rental> GetActiveRentalsForUser(int userId)
+    {
+        return _rentals
+            .Where(r => r.IsActive && r.User.Id == userId)
+            .ToList();
+    }
+
+    public List<Rental> GetOverdueRentals(DateTime asOf)
+    {
+        return _rentals
+            .Where(r => r.IsActive && r.DueDate.Date < asOf.Date)
+            .ToList();
+    }
 }

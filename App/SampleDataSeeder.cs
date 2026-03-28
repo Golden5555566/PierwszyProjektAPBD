@@ -19,16 +19,18 @@ public static class SampleDataSeeder
         var users = new List<User> { student, studentTwo, employee };
         var equipment = new List<Equipment> { laptop, laptopTwo, projector, projectorTwo, camera };
 
-        return new SampleDataSet(
-            equipment,
-            users,
-            student,
-            studentTwo,
-            employee,
-            laptop,
-            laptopTwo,
-            projector,
-            projectorTwo,
-            camera);
+        return new SampleDataSet
+        {
+            Equipment = equipment,
+            Users = users,
+            Student = student,
+            StudentTwo = studentTwo,
+            Employee = employee,
+            Laptop = laptop,
+            LaptopTwo = laptopTwo,
+            Projector = projector,
+            ProjectorTwo = projectorTwo,
+            Camera = camera
+        };
     }
 }

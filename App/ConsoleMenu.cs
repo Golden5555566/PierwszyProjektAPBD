@@ -109,7 +109,8 @@ public class ConsoleMenu
     private void ShowOverdueRentals()
     {
         PrintHeader("PRZETERMINOWANE WYPOZYCZENIA");
-        Console.WriteLine(_filteredReportService.BuildOverdueRentalsReport(_rentalService.Rentals, DateTime.Today));
+        var overdueRentals = _rentalService.GetOverdueRentals(DateTime.Today);
+        Console.WriteLine(_filteredReportService.BuildOverdueRentalsReport(overdueRentals, DateTime.Today));
         Pause();
     }
 
@@ -141,7 +142,7 @@ public class ConsoleMenu
     private void ReturnEquipment()
     {
         PrintHeader("ZWROT");
-        var activeRentals = _rentalService.Rentals.Where(item => item.IsActive).ToList();
+        var activeRentals = _rentalService.GetActiveRentals();
         Console.WriteLine(_reportService.BuildActiveRentalsReport(activeRentals));
 
         Console.Write("Podaj id sprzetu do zwrotu: ");
@@ -166,9 +167,7 @@ public class ConsoleMenu
         Console.Write("Podaj id uzytkownika: ");
         var userId = ReadInt();
 
-        var rentals = _rentalService.Rentals
-            .Where(item => item.IsActive && item.User.Id == userId)
-            .ToList();
+        var rentals = _rentalService.GetActiveRentalsForUser(userId);
 
         Console.WriteLine(_reportService.BuildActiveRentalsReport(rentals));
         Pause();
