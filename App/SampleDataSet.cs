@@ -4,23 +4,47 @@ namespace Projekt.App;
 
 public class SampleDataSet
 {
-    public required List<Equipment> Equipment { get; init; }
+    public SampleDataSet(
+        List<Equipment> equipment,
+        List<User> users,
+        Student student,
+        Student studentTwo,
+        Employee employee,
+        Laptop laptop,
+        Laptop laptopTwo,
+        Projector projector,
+        Projector projectorTwo,
+        Camera camera)
+    {
+        Equipment = equipment;
+        Users = users;
+        Student = student;
+        StudentTwo = studentTwo;
+        Employee = employee;
+        Laptop = laptop;
+        LaptopTwo = laptopTwo;
+        Projector = projector;
+        ProjectorTwo = projectorTwo;
+        Camera = camera;
+    }
 
-    public required List<User> Users { get; init; }
+    public List<Equipment> Equipment { get; }
 
-    public required Student Student { get; init; }
+    public List<User> Users { get; }
 
-    public required Student StudentTwo { get; init; }
+    public Student Student { get; }
 
-    public required Employee Employee { get; init; }
+    public Student StudentTwo { get; }
 
-    public required Laptop Laptop { get; init; }
+    public Employee Employee { get; }
 
-    public required Laptop LaptopTwo { get; init; }
+    public Laptop Laptop { get; }
 
-    public required Projector Projector { get; init; }
+    public Laptop LaptopTwo { get; }
 
-    public required Projector ProjectorTwo { get; init; }
+    public Projector Projector { get; }
 
-    public required Camera Camera { get; init; }
+    public Projector ProjectorTwo { get; }
+
+    public Camera Camera { get; }
 }

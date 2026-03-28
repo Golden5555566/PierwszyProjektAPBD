@@ -44,13 +44,18 @@ public class ConsoleMenu
             var choice = Console.ReadLine();
             Console.WriteLine();
 
+            if (choice is not null)
+            {
+                choice = choice.Trim();
+            }
+
             switch (choice)
             {
                 case "1":
-                    Console.WriteLine(_reportService.BuildEquipmentReport(_equipment));
+                    ShowAllEquipment();
                     break;
                 case "2":
-                    Console.WriteLine(_filteredReportService.BuildAvailableEquipmentReport(_equipment));
+                    ShowAvailableEquipment();
                     break;
                 case "3":
                     RentEquipment();
@@ -65,22 +70,52 @@ public class ConsoleMenu
                     ShowFinalReport();
                     break;
                 case "7":
-                    Console.WriteLine(_filteredReportService.BuildBrokenEquipmentReport(_equipment));
+                    ShowBrokenEquipment();
                     break;
                 case "8":
-                    Console.WriteLine(_filteredReportService.BuildOverdueRentalsReport(_rentalService.Rentals, DateTime.Today));
+                    ShowOverdueRentals();
                     break;
                 case "0":
                     return;
                 default:
                     Console.WriteLine("Nieznana opcja.");
+                    Pause();
                     break;
             }
         }
     }
 
+    private void ShowAllEquipment()
+    {
+        PrintHeader("CALY SPRZET");
+        Console.WriteLine(_reportService.BuildEquipmentReport(_equipment));
+        Pause();
+    }
+
+    private void ShowAvailableEquipment()
+    {
+        PrintHeader("SPRZET DOSTEPNY");
+        Console.WriteLine(_filteredReportService.BuildAvailableEquipmentReport(_equipment));
+        Pause();
+    }
+
+    private void ShowBrokenEquipment()
+    {
+        PrintHeader("SPRZET USZKODZONY");
+        Console.WriteLine(_filteredReportService.BuildBrokenEquipmentReport(_equipment));
+        Pause();
+    }
+
+    private void ShowOverdueRentals()
+    {
+        PrintHeader("PRZETERMINOWANE WYPOZYCZENIA");
+        Console.WriteLine(_filteredReportService.BuildOverdueRentalsReport(_rentalService.Rentals, DateTime.Today));
+        Pause();
+    }
+
     private void RentEquipment()
     {
+        PrintHeader("WYPOZYCZANIE");
         Console.WriteLine(_reportService.BuildEquipmentReport(_equipment));
         Console.WriteLine(_reportService.BuildUsersReport(_users));
 
@@ -96,6 +131,7 @@ public class ConsoleMenu
         {
             Console.WriteLine("[BLAD] Nie znaleziono sprzetu lub uzytkownika.");
             Console.WriteLine();
+            Pause();
             return;
         }
 
@@ -104,6 +140,7 @@ public class ConsoleMenu
 
     private void ReturnEquipment()
     {
+        PrintHeader("ZWROT");
         var activeRentals = _rentalService.Rentals.Where(item => item.IsActive).ToList();
         Console.WriteLine(_reportService.BuildActiveRentalsReport(activeRentals));
 
@@ -115,6 +152,7 @@ public class ConsoleMenu
         {
             Console.WriteLine("[BLAD] Nie znaleziono sprzetu.");
             Console.WriteLine();
+            Pause();
             return;
         }
 
@@ -123,6 +161,7 @@ public class ConsoleMenu
 
     private void ShowUserRentals()
     {
+        PrintHeader("WYPOZYCZENIA UZYTKOWNIKA");
         Console.WriteLine(_reportService.BuildUsersReport(_users));
         Console.Write("Podaj id uzytkownika: ");
         var userId = ReadInt();
@@ -132,13 +171,16 @@ public class ConsoleMenu
             .ToList();
 
         Console.WriteLine(_reportService.BuildActiveRentalsReport(rentals));
+        Pause();
     }
 
     private void ShowFinalReport()
     {
+        PrintHeader("RAPORT KONCOWY");
         Console.WriteLine(_reportService.BuildEquipmentReport(_equipment));
         Console.WriteLine(_reportService.BuildUsersReport(_users));
         Console.WriteLine(_reportService.BuildActiveRentalsReport(_rentalService.Rentals));
+        Pause();
     }
 
     private static int ReadInt()
@@ -165,6 +207,14 @@ public class ConsoleMenu
     {
         var prefix = result.Success ? "[OK]" : "[BLAD]";
         Console.WriteLine($"{prefix} {result.Message}");
+        Console.WriteLine();
+        Pause();
+    }
+
+    private static void Pause()
+    {
+        Console.WriteLine("Nacisnij Enter, aby wrocic do menu...");
+        Console.ReadLine();
         Console.WriteLine();
     }
 }

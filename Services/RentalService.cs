@@ -4,7 +4,7 @@ namespace Projekt.Services;
 
 public class RentalService
 {
-    private readonly List<Rental> _rentals = [];
+    private readonly List<Rental> _rentals = new();
 
     public IReadOnlyList<Rental> Rentals => _rentals;
 

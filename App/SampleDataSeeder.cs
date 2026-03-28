@@ -16,18 +16,19 @@ public static class SampleDataSeeder
         var projectorTwo = new Projector("BenQ MX560", 4000);
         var camera = new Camera("Sony Handycam", true);
 
-        return new SampleDataSet
-        {
-            Student = student,
-            StudentTwo = studentTwo,
-            Employee = employee,
-            Laptop = laptop,
-            LaptopTwo = laptopTwo,
-            Projector = projector,
-            ProjectorTwo = projectorTwo,
-            Camera = camera,
-            Users = [student, studentTwo, employee],
-            Equipment = [laptop, laptopTwo, projector, projectorTwo, camera]
-        };
+        var users = new List<User> { student, studentTwo, employee };
+        var equipment = new List<Equipment> { laptop, laptopTwo, projector, projectorTwo, camera };
+
+        return new SampleDataSet(
+            equipment,
+            users,
+            student,
+            studentTwo,
+            employee,
+            laptop,
+            laptopTwo,
+            projector,
+            projectorTwo,
+            camera);
     }
 }
