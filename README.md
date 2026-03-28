@@ -1,43 +1,39 @@
-# Projekt 1 - Wypozyczalnia sprzetu
+# Projekt - wypozyczalnia sprzetu
 
-Prosta aplikacja konsolowa w C# obslugujaca uczelniana wypozyczalnie sprzetu. Projekt zostal zrobiony celowo mozliwie prosto, ale z zachowaniem sensownego podzialu odpowiedzialnosci.
+Prosta aplikacja konsolowa w C# obslugujaca uczelniana wypozyczalnie sprzetu. Projekt zostal przygotowany w prosty sposob, ale z zachowaniem czytelnego podzialu odpowiedzialnosci pomiedzy model domenowy, serwisy i warstwe konsolowa.
 
 ## Jak uruchomic
 
-1. Otworz projekt w Riderze lub Visual Studio. .
-2.Uruchom projekt `Projekt1`.
-
-Po starcie aplikacja wykona gotowy scenariusz demonstracyjny i wyswietli raport koncowy.
+1. Otworz projekt w Riderze lub Visual Studio.
+2. Uruchom projekt `Projekt`.
+3. Po starcie wybierz:
+   `1`, aby uruchomic scenariusz demonstracyjny,
+   `2`, aby wejsc do prostego menu tekstowego.
 
 ## Struktura projektu
 
-- `Domain` - model domeny: sprzet, uzytkownicy, wypozyczenia, enumy i generator identyfikatorow.
-- `Services` - logika biznesowa: wypozyczanie, zwroty, limity, kara za opoznienie i raport.
-- `App` - prosty scenariusz demonstracyjny dla konsoli.
-- `Program.cs` - tylko uruchamia `DemoRunner`, bez logiki biznesowej.
+- `Domain` - klasy domenowe opisujace sprzet, uzytkownikow i wypozyczenia.
+- `Services` - logika biznesowa oraz raportowanie.
+- `App` - scenariusz demonstracyjny, dane startowe i menu tekstowe.
+- `Program.cs` - punkt wejscia aplikacji.
 
 ## Najwazniejsze decyzje projektowe
 
-- `Equipment` i `User` sa klasami abstrakcyjnymi, bo maja czesc wspolna i kilka specjalizacji.
-- `RentalService` zbiera logike biznesowa w jednym miejscu, dzieki czemu nie ma jej w `Program.cs`.
-- `RentalPolicy` przechowuje limity i zasady naliczania kary, wiec taka regule da sie latwo zmienic bez szukania jej po calym projekcie.
-- `DemoRunner` odpowiada tylko za pokazanie scenariusza, a nie za podejmowanie decyzji biznesowych.
-
-## Kohezja i coupling
-
-- Kohezja: kazda klasa ma jedno glowne zadanie, np. `Rental` opisuje wypozyczenie, a `RentalService` wykonuje operacje na systemie.
-- Coupling: klasy domenowe nie znaja szczegolow konsoli. Warstwa `App` korzysta z serwisu, ale model nie zalezy od interfejsu uzytkownika.
+- `Equipment` i `User` sa klasami bazowymi dla konkretnych typow obiektow.
+- `RentalService` odpowiada za obsluge wypozyczen i zwrotow.
+- `ReportService` i `FilteredReportService` odpowiadaja za generowanie raportow.
+- `SampleDataSeeder` przygotowuje dane testowe w jednym miejscu.
+- `ConsoleMenu` obsluguje interakcje z uzytkownikiem bez przenoszenia logiki biznesowej do `Program.cs`.
 
 ## Zakres funkcjonalny
 
-- dodawanie uzytkownikow,
-- dodawanie sprzetu,
-- lista calego sprzetu,
-- lista dostepnego sprzetu,
-- wypozyczenie sprzetu,
-- zwrot w terminie i po terminie,
-- blokada wypozyczenia po przekroczeniu limitu,
-- blokada wypozyczenia sprzetu niedostepnego,
-- lista aktywnych wypozyczen uzytkownika,
-- lista przeterminowanych wypozyczen,
-- raport podsumowujacy.
+- dodawanie i prezentacja danych startowych,
+- wypozyczanie sprzetu,
+- zwrot sprzetu,
+- kontrola limitow wypozyczen,
+- raport calego sprzetu,
+- raport aktywnych wypozyczen,
+- raport sprzetu dostepnego,
+- raport sprzetu uszkodzonego,
+- raport przeterminowanych wypozyczen,
+- scenariusz demonstracyjny i proste menu tekstowe.
