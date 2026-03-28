@@ -1,2 +1,4 @@
-﻿Console.WriteLine("Hello, World!");
-Console.WriteLine("Hello");
+using Projekt.App;
+
+var demoRunner = new DemoRunner();
+demoRunner.Run();
